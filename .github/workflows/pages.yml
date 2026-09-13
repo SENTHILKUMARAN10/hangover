@@ -39,6 +39,7 @@ jobs:
           for file in "${files[@]}"; do
             curl --fail --location --retry 3 --retry-delay 2 "${base}/${file}" --output "${file}"
           done
+          perl -0pi -e 's#<script>\\\(function\\\(\\\)\\\{function c\\\(\\\).*?</script>##s' index.html
           touch .nojekyll
 
       - name: Commit refreshed website
