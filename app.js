@@ -1,3 +1,9 @@
+const paletteSheet=document.createElement('link');
+paletteSheet.rel='stylesheet';
+paletteSheet.href='palette.css?v=20260914';
+document.head.appendChild(paletteSheet);
+document.querySelector('meta[name="theme-color"]')?.setAttribute('content','#FFD500');
+
 const reduceMotion=matchMedia('(prefers-reduced-motion: reduce)').matches;
 const header=document.getElementById('site-header');
 addEventListener('scroll',()=>header?.classList.toggle('scrolled',scrollY>24),{passive:true});
