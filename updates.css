@@ -1,0 +1,47 @@
+/* Hangover Shakes update additions.
+   Base UI/layout intentionally remains the same as the previous website. */
+
+/* Production additions only — the original site UI/layout remains untouched. */
+.menu-bottom{align-items:center;flex-wrap:wrap}
+.full-menu-trigger{margin-left:auto}
+.full-menu-shell{position:fixed;inset:0;z-index:100;background:rgba(33,29,20,.72);backdrop-filter:blur(10px);padding:24px;display:none;overflow:auto}
+.full-menu-shell.open{display:block}
+.full-menu-dialog{width:min(1180px,100%);margin:auto;background:var(--cream);border:1px solid var(--ink);border-radius:16px;overflow:hidden;box-shadow:0 30px 100px rgba(0,0,0,.35)}
+.full-menu-top{position:sticky;top:0;z-index:3;background:rgba(253,251,213,.96);backdrop-filter:blur(12px);padding:24px 28px 18px;border-bottom:1px solid var(--line)}
+.full-menu-title-row{display:flex;align-items:flex-start;justify-content:space-between;gap:24px}
+.full-menu-title-row h2{font-size:clamp(46px,6vw,76px)}
+.full-menu-close{width:46px;height:46px;border:1px solid var(--ink);background:var(--cream);border-radius:50%;font-size:28px;line-height:1}
+.full-menu-tabs{display:flex;gap:8px;overflow:auto;padding-top:18px;scrollbar-width:none}
+.full-menu-tabs::-webkit-scrollbar{display:none}
+.full-menu-tabs button{border:1px solid var(--ink);background:transparent;border-radius:999px;padding:11px 15px;white-space:nowrap;font-weight:700}
+.full-menu-tabs button.active{background:var(--ink);color:var(--cream)}
+.full-menu-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;padding:24px}
+.full-menu-card{border:1px solid var(--line);border-radius:12px;padding:22px;background:#fffef0}
+.full-menu-card-head{border-bottom:1px solid var(--line);padding-bottom:12px;margin-bottom:5px}
+.menu-card-kicker{font-size:10px;letter-spacing:1.2px;font-weight:800;color:var(--muted)}
+.full-menu-card h3{font-family:'Barlow Condensed','Arial Narrow',Impact,sans-serif;font-size:30px;margin:3px 0 0}
+.full-menu-card ul{list-style:none;padding:0;margin:0}
+.full-menu-card li{display:flex;align-items:flex-start;justify-content:space-between;gap:20px;padding:10px 0;border-bottom:1px dashed var(--line);font-size:14px;line-height:1.35}
+.full-menu-card li:last-child{border-bottom:0}
+.full-menu-card li strong{white-space:nowrap}
+.full-menu-foot{padding:0 24px 24px;color:var(--muted);font-size:13px;line-height:1.6}
+.qr-strip{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:24px}
+.qr-card{display:grid;grid-template-columns:94px 1fr;align-items:center;gap:16px;background:var(--cream);border:1px solid var(--ink);border-radius:8px;padding:14px}
+.qr-card img{width:94px;height:94px;border-radius:6px}
+.qr-card strong{display:block;font-size:18px;margin-bottom:5px}
+.qr-card span{font-size:13px;line-height:1.45;color:var(--muted)}
+.footer-bottom{align-items:center}
+@media(max-width:760px){
+ .full-menu-shell{padding:0}
+ .full-menu-dialog{border-radius:0;min-height:100vh}
+ .full-menu-top{padding:18px}
+ .full-menu-grid{grid-template-columns:1fr;padding:14px}
+ .full-menu-foot{padding:0 14px 20px}
+ .qr-strip{grid-template-columns:1fr}
+ .qr-card{grid-template-columns:82px 1fr}
+ .qr-card img{width:82px;height:82px}
+ .full-menu-trigger{width:100%;margin:8px 0 0}
+}
+
+.mobile-quick button{border:0;background:transparent;color:var(--yellow);text-align:center;padding:12px 4px;font-size:14px;font-weight:600}
+.mobile-quick button:focus-visible{outline-color:var(--yellow);outline-offset:0}
