@@ -1,57 +1,55 @@
-/* Sticky solid dark-yellow glossy header */
+/* Restore the original Hangover Shakes header only.
+   This neutralizes all later sticky/glass/yellow header experiments. */
 .header{
-  position:sticky!important;
-  top:8px!important;
-  z-index:70;
-  margin-top:8px;
-  padding:14px 22px;
-  background:#D6A400!important;
-  border:1px solid rgba(33,29,20,.22)!important;
-  border-radius:18px;
-  box-shadow:0 12px 32px rgba(33,29,20,.16),inset 0 1px 0 rgba(255,255,255,.46),inset 0 -1px 0 rgba(91,66,0,.18)!important;
-  backdrop-filter:blur(20px) saturate(145%)!important;
-  -webkit-backdrop-filter:blur(20px) saturate(145%)!important;
+  position:static!important;
+  top:auto!important;
+  z-index:auto!important;
+  margin-top:0!important;
+  padding:19px 0!important;
+  background:transparent!important;
+  border:0!important;
+  border-bottom:1px solid var(--line)!important;
+  border-radius:0!important;
+  box-shadow:none!important;
+  backdrop-filter:none!important;
+  -webkit-backdrop-filter:none!important;
   transform:none!important;
-  transition:box-shadow .28s ease,border-color .28s ease!important;
-  overflow:visible;
+  transition:none!important;
+  animation:none!important;
+  overflow:visible!important;
 }
-.header::before{
-  content:"";
-  position:absolute;
-  inset:0;
-  border-radius:inherit;
-  pointer-events:none;
-  background:linear-gradient(115deg,rgba(255,255,255,.28) 0%,rgba(255,255,255,.08) 30%,rgba(255,255,255,0) 50%,rgba(255,255,255,.14) 74%,rgba(255,255,255,.03) 100%)!important;
-  opacity:1!important;
-  z-index:0!important;
-}
-.header::after{
-  content:"";
-  position:absolute;
-  left:6%;right:6%;top:0;height:1px;
-  background:linear-gradient(90deg,transparent,rgba(255,255,255,.82),transparent);
-  opacity:.9;
-  pointer-events:none;
-}
-.header>*{position:relative;z-index:1}
+.header::before,.header::after{display:none!important;content:none!important}
 .header.is-scrolled{
-  background:#D6A400!important;
-  border-color:rgba(33,29,20,.28)!important;
-  box-shadow:0 14px 36px rgba(33,29,20,.2),inset 0 1px 0 rgba(255,255,255,.46)!important;
+  background:transparent!important;
+  border:0!important;
+  border-bottom:1px solid var(--line)!important;
+  box-shadow:none!important;
   transform:none!important;
 }
-.header.is-scrolled .logo{transform:none!important}
-.header nav a,.header .nav-toggle{color:var(--ink)!important}
+.header .logo,.header.is-scrolled .logo{transform:none!important}
+.header nav a,.header .nav-toggle{color:inherit!important}
 
 @media(max-width:760px){
-  .header{top:6px!important;margin-top:6px;padding:11px 13px;border-radius:14px}
+  .header{
+    position:static!important;
+    top:auto!important;
+    margin-top:0!important;
+    padding:14px 0!important;
+    border-radius:0!important;
+  }
+  .header .logo{width:155px!important}
   .header nav.open{
-    background:#D6A400!important;
-    border:1px solid rgba(33,29,20,.22)!important;
-    box-shadow:0 12px 28px rgba(33,29,20,.16)!important;
-    backdrop-filter:blur(18px) saturate(145%)!important;
-    -webkit-backdrop-filter:blur(18px) saturate(145%)!important;
+    background:transparent!important;
+    border:0!important;
+    border-radius:0!important;
+    box-shadow:none!important;
+    backdrop-filter:none!important;
+    -webkit-backdrop-filter:none!important;
+    padding:8px 0 0!important;
   }
 }
-@media(max-width:360px){.header{padding:9px 10px}}
-@media(prefers-reduced-motion:reduce){.header{animation:none!important;transition:none!important}}
+
+@media(max-width:360px){
+  .header{padding:14px 0!important}
+  .header .logo{width:155px!important}
+}
