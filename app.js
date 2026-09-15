@@ -4,7 +4,7 @@ if('IntersectionObserver' in window&&!reduceMotion){
   const observer=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add('visible');observer.unobserve(entry.target)}}),{threshold:.08});
   document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
 }
-document.getElementById('year').textContent=new Date().getFullYear();
+const year=document.getElementById('year'); if(year) year.textContent=new Date().getFullYear();
 
 const toggle=document.querySelector('.nav-toggle'),nav=document.getElementById('navigation');
 toggle?.addEventListener('click',()=>{const open=toggle.getAttribute('aria-expanded')!=='true';toggle.setAttribute('aria-expanded',String(open));nav?.classList.toggle('open',open)});
