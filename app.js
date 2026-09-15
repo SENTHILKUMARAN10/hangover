@@ -1,3 +1,8 @@
+const headerThemeSheet=document.createElement('link');
+headerThemeSheet.rel='stylesheet';
+headerThemeSheet.href='header-static.css?v=20260915';
+document.head.appendChild(headerThemeSheet);
+
 const reduceMotion=matchMedia('(prefers-reduced-motion: reduce)').matches;
 if('IntersectionObserver' in window&&!reduceMotion){
   document.body.classList.add('motion-ready');
@@ -72,12 +77,6 @@ fullTabs.forEach(tab=>tab.addEventListener('click',()=>{
   fullCards.forEach(card=>{card.hidden=filter!=='all'&&card.dataset.menuGroup!==filter});
   document.querySelector('.full-menu-dialog')?.scrollTo({top:0,behavior:'smooth'});
 }));
-
-/* Glass header interaction */
-const siteHeader=document.querySelector('.header');
-const syncHeaderGlass=()=>siteHeader?.classList.toggle('is-scrolled',scrollY>18);
-syncHeaderGlass();
-addEventListener('scroll',syncHeaderGlass,{passive:true});
 
 /* Promote Shawarma in the same existing menu layout */
 const firstRibbonLabel=document.querySelector('.ribbon span');
