@@ -46,7 +46,7 @@
 .mobile-quick button{border:0;background:transparent;color:var(--yellow);text-align:center;padding:12px 4px;font-size:14px;font-weight:600}
 .mobile-quick button:focus-visible{outline-color:var(--yellow);outline-offset:0}
 
-/* Compact production spacing requested in revision 2 */
+/* Compact production spacing */
 .order-section{padding:34px 0}
 .order-grid{margin-top:24px;gap:36px;align-items:center}
 .location-card{padding:22px 24px}
@@ -57,8 +57,97 @@
 .contact-grid{margin-top:28px;gap:48px}
 .contact-details{margin-top:22px}
 .contact form{padding:24px}
+
+/* Glassy animated header */
+.header{position:sticky;top:12px;z-index:60;margin-top:10px;padding:14px 22px;background:rgba(253,251,213,.68);border:1px solid rgba(33,29,20,.12);border-radius:18px;box-shadow:0 8px 28px rgba(33,29,20,.06);backdrop-filter:blur(18px) saturate(145%);-webkit-backdrop-filter:blur(18px) saturate(145%);transition:background .35s ease,box-shadow .35s ease,transform .35s ease,border-color .35s ease;animation:headerGlassIn .65s cubic-bezier(.2,.8,.2,1) both;overflow:visible}
+.header::before{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;background:linear-gradient(110deg,rgba(255,255,255,.42),rgba(255,255,255,.04) 38%,rgba(255,255,255,.18) 68%,rgba(255,255,255,.02));opacity:.55;z-index:-1}
+.header.is-scrolled{background:rgba(253,251,213,.88);border-color:rgba(33,29,20,.18);box-shadow:0 14px 38px rgba(33,29,20,.14);transform:translateY(-4px)}
+.header .logo{transition:transform .3s ease}
+.header.is-scrolled .logo{transform:scale(.94)}
+@keyframes headerGlassIn{from{opacity:0;transform:translateY(-18px) scale(.985)}to{opacity:1;transform:translateY(0) scale(1)}}
+
+/* Highlighted offers popup */
+.offer-fab{position:fixed;right:18px;bottom:18px;z-index:85;border:1px solid var(--ink);background:var(--yellow);color:var(--ink);border-radius:999px;padding:13px 18px;font-weight:800;box-shadow:5px 5px 0 var(--ink);cursor:pointer;transition:transform .2s ease,box-shadow .2s ease}
+.offer-fab:hover{transform:translate(-2px,-2px);box-shadow:7px 7px 0 var(--ink)}
+.offer-popup{position:fixed;inset:0;z-index:130;display:none;place-items:center;padding:20px;background:rgba(20,16,9,.72);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+.offer-popup.open{display:grid;animation:offerFade .22s ease both}
+.offer-dialog{position:relative;width:min(720px,100%);background:var(--cream);border:1px solid var(--ink);border-radius:20px;padding:30px;box-shadow:12px 12px 0 var(--ink);animation:offerPop .35s cubic-bezier(.2,.8,.2,1) both}
+.offer-close{position:absolute;top:16px;right:16px;width:42px;height:42px;border:1px solid var(--ink);border-radius:50%;background:var(--cream);font-size:26px;line-height:1;cursor:pointer}
+.offer-kicker{margin:0 0 8px;font-size:12px;font-weight:800;letter-spacing:1.4px;text-transform:uppercase}
+.offer-dialog h2{font-size:clamp(44px,7vw,72px);margin:0 50px 22px 0}
+.offer-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.offer-card{background:var(--yellow);border:1px solid var(--ink);border-radius:12px;padding:22px;min-height:170px;display:flex;flex-direction:column;justify-content:space-between}
+.offer-card:nth-child(2){background:var(--lemon)}
+.offer-card span{font-size:11px;font-weight:800;letter-spacing:1.2px;text-transform:uppercase}
+.offer-card h3{font-family:'Barlow Condensed','Arial Narrow',Impact,sans-serif;font-size:32px;line-height:1;margin:10px 0}
+.offer-price{font-family:'Barlow Condensed','Arial Narrow',Impact,sans-serif;font-size:36px;font-weight:800;margin:0}
+.offer-actions{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-top:20px}
+@keyframes offerFade{from{opacity:0}to{opacity:1}}
+@keyframes offerPop{from{opacity:0;transform:translateY(18px) scale(.96)}to{opacity:1;transform:none}}
+
+/* Cross-device responsive refinements */
+html,body{max-width:100%;overflow-x:hidden}
+.wrap{width:min(1280px,calc(100% - clamp(28px,7vw,96px)))}
+.product-image img{object-position:center}
+.hero-art,.portrait-stage,.product,.location-card,form{min-width:0}
+
+@media(max-width:1100px){
+  .hero{grid-template-columns:minmax(0,1fr) minmax(0,.92fr);gap:30px}
+  .product-rail{grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+  .cafe-grid,.contact-grid,.order-grid{gap:32px}
+}
+@media(max-width:900px){
+  .hero{grid-template-columns:1fr;gap:28px;padding-block:42px}
+  .hero-copy{max-width:720px}
+  .hero-art{width:min(100%,620px);margin-inline:auto;min-height:390px}
+  .product-rail{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .cafe-grid,.order-grid,.contact-grid{grid-template-columns:1fr}
+  .order-copy,.contact-grid>div:first-child{max-width:700px}
+  .plans-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
 @media(max-width:760px){
+  .header{top:8px;margin-top:8px;padding:11px 13px;border-radius:14px}
+  .header .logo{width:142px}
+  .header nav.open{background:rgba(253,251,213,.94);border:1px solid rgba(33,29,20,.12);border-radius:12px;padding:12px;box-shadow:0 12px 28px rgba(33,29,20,.1)}
+  .hero{padding-block:30px}
+  .hero-art{min-height:320px}
+  .product-rail{grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+  .plans-grid{grid-template-columns:1fr}
   .order-section,.contact{padding-block:28px}
   .order-grid{margin-top:20px}
   .contact-grid{margin-top:22px}
+  .offer-fab{right:12px;bottom:82px;padding:11px 14px;font-size:13px;box-shadow:4px 4px 0 var(--ink)}
+  .offer-popup{padding:12px}
+  .offer-dialog{padding:24px 18px 20px;border-radius:16px;box-shadow:7px 7px 0 var(--ink)}
+  .offer-grid{grid-template-columns:1fr}
+  .offer-card{min-height:135px;padding:18px}
+}
+@media(max-width:520px){
+  .wrap{width:calc(100% - 24px)}
+  .hero h1{font-size:clamp(48px,14vw,68px)}
+  .hero-art{min-height:285px;border-radius:42% 42% 10px 10px}
+  .product-rail{grid-template-columns:1fr}
+  .product-image{aspect-ratio:1.45}
+  .section-top{align-items:flex-start}
+  .menu-heading{margin:26px 0}
+  .ribbon{justify-content:center}
+  .qr-card{grid-template-columns:74px 1fr;padding:12px}
+  .qr-card img{width:74px;height:74px}
+  .full-menu-title-row h2{font-size:44px}
+  .offer-dialog h2{font-size:46px}
+}
+@media(max-width:360px){
+  .wrap{width:calc(100% - 18px)}
+  .header{padding:9px 10px}
+  .header .logo{width:128px}
+  .nav-toggle{padding:9px 11px}
+  .hero h1{font-size:46px}
+  .button{min-height:48px;padding:13px 16px}
+  .qr-card{grid-template-columns:64px 1fr;gap:10px}
+  .qr-card img{width:64px;height:64px}
+}
+
+@media(prefers-reduced-motion:reduce){
+  .header,.offer-popup.open,.offer-dialog{animation:none!important}
+  .header,.offer-fab{transition:none!important}
 }
