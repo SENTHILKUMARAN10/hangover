@@ -1,6 +1,6 @@
 const headerThemeSheet=document.createElement('link');
 headerThemeSheet.rel='stylesheet';
-headerThemeSheet.href='header-static.css?v=20260915';
+headerThemeSheet.href='header-static.css?v=20260915b';
 document.head.appendChild(headerThemeSheet);
 
 const reduceMotion=matchMedia('(prefers-reduced-motion: reduce)').matches;
