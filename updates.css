@@ -45,3 +45,20 @@
 
 .mobile-quick button{border:0;background:transparent;color:var(--yellow);text-align:center;padding:12px 4px;font-size:14px;font-weight:600}
 .mobile-quick button:focus-visible{outline-color:var(--yellow);outline-offset:0}
+
+/* Compact production spacing requested in revision 2 */
+.order-section{padding:34px 0}
+.order-grid{margin-top:24px;gap:36px;align-items:center}
+.location-card{padding:22px 24px}
+.order-actions{margin-top:0;gap:10px}
+.qr-strip{margin-top:16px}
+.order-copy>p{margin-bottom:0}
+.contact{padding:38px 0}
+.contact-grid{margin-top:28px;gap:48px}
+.contact-details{margin-top:22px}
+.contact form{padding:24px}
+@media(max-width:760px){
+  .order-section,.contact{padding-block:28px}
+  .order-grid{margin-top:20px}
+  .contact-grid{margin-top:22px}
+}
