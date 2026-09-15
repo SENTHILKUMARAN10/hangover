@@ -1,0 +1,59 @@
+/* Static theme-matched glossy glass header */
+.header{
+  position:relative!important;
+  top:auto!important;
+  z-index:20;
+  margin-top:10px;
+  padding:14px 22px;
+  background:linear-gradient(120deg,rgba(252,199,36,.18),rgba(253,251,213,.24) 48%,rgba(254,243,108,.14))!important;
+  border:1px solid rgba(255,255,255,.58)!important;
+  border-radius:18px;
+  box-shadow:0 10px 28px rgba(33,29,20,.07),inset 0 1px 0 rgba(255,255,255,.72),inset 0 -1px 0 rgba(205,139,9,.08)!important;
+  backdrop-filter:blur(22px) saturate(155%)!important;
+  -webkit-backdrop-filter:blur(22px) saturate(155%)!important;
+  transform:none!important;
+  transition:box-shadow .28s ease,border-color .28s ease,background .28s ease!important;
+  overflow:hidden;
+}
+.header::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  border-radius:inherit;
+  pointer-events:none;
+  background:linear-gradient(115deg,rgba(255,255,255,.52) 0%,rgba(255,255,255,.14) 28%,rgba(255,255,255,.03) 48%,rgba(255,255,255,.22) 72%,rgba(255,255,255,.05) 100%)!important;
+  opacity:.46!important;
+  z-index:0!important;
+}
+.header::after{
+  content:"";
+  position:absolute;
+  left:5%;
+  right:5%;
+  top:0;
+  height:1px;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.95),transparent);
+  opacity:.72;
+  pointer-events:none;
+}
+.header>*{position:relative;z-index:1}
+.header.is-scrolled{
+  background:linear-gradient(120deg,rgba(252,199,36,.18),rgba(253,251,213,.24) 48%,rgba(254,243,108,.14))!important;
+  border-color:rgba(255,255,255,.58)!important;
+  box-shadow:0 10px 28px rgba(33,29,20,.07),inset 0 1px 0 rgba(255,255,255,.72)!important;
+  transform:none!important;
+}
+.header.is-scrolled .logo{transform:none!important}
+
+@media(max-width:760px){
+  .header{top:auto!important;margin-top:8px;padding:11px 13px;border-radius:14px}
+  .header nav.open{background:rgba(253,251,213,.58)!important;backdrop-filter:blur(18px) saturate(150%);-webkit-backdrop-filter:blur(18px) saturate(150%);border:1px solid rgba(255,255,255,.5)!important}
+}
+
+@media(max-width:360px){
+  .header{padding:9px 10px}
+}
+
+@media(prefers-reduced-motion:reduce){
+  .header{animation:none!important;transition:none!important}
+}
