@@ -23,18 +23,19 @@ jobs:
           node --check ordering-config.js
           node --check ordering.js
           node --check admin.js
+          node --check table-qr.js
           node --check tests/ordering-contract.test.cjs
 
-      - name: Validate complete menu and checkout contracts
+      - name: Validate menu and dine-in ordering contracts
         run: node tests/ordering-contract.test.cjs
 
       - name: Check required website files
         run: |
-          for file in index.html admin.html style.css updates.css app.js menu-data.js ordering.js ordering.css admin.js ordering-config.js supabase-realtime-policies.sql ORDERING_SETUP.md tests/ordering-contract.test.cjs assets/logo.png assets/crew.png; do
+          for file in index.html admin.html table-qr.html style.css updates.css app.js menu-data.js ordering.js ordering.css dinein.css admin.js table-qr.js ordering-config.js supabase-realtime-policies.sql ORDERING_SETUP.md FRIEND_DEPLOY_HANDOFF.md tests/ordering-contract.test.cjs assets/logo.png assets/crew.png; do
             test -s "$file"
           done
 
-      - name: Validate both HTML documents and local references
+      - name: Validate three HTML documents and local references
         run: |
           python - <<'PY'
           from html.parser import HTMLParser
@@ -52,7 +53,7 @@ jobs:
                   if tag == 'link' and data.get('href'):
                       self.refs.append(data['href'])
 
-          for html_file in ('index.html', 'admin.html'):
+          for html_file in ('index.html', 'admin.html', 'table-qr.html'):
               html = (root / html_file).read_text(encoding='utf-8')
               parser = Parser()
               parser.feed(html)
