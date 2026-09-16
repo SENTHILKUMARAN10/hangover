@@ -37,22 +37,23 @@
       window.HANGOVER_MENU = freshMenu;
       window.HS_MANAGED_OFFERS = data.offers.filter(offer => offer.active);
       window.HS_CONTENT_REVISION = data.revision;
-      // Stable cart IDs depend on catalogue positions. Never silently remap old items to new prices.
+      // Cart IDs derive from catalogue positions. A revision MUST invalidate stale IDs and prices.
       try {
-        const key = 'hs-published-menu-revision';
-        if (localStorage.getItem(key) !== String(data.revision)) {
-          for (const entry of Object.keys(localStorage)) {
-            if (entry.startsWith('hangover-dinein-cart-')) localStorage.removeItem(entry);
+        const key='hs-published-menu-revision';
+        if(localStorage.getItem(key)!==String(data.revision)){
+          for(let i=localStorage.length-1;i>=0;i--){
+            const entry=localStorage.key(i);
+            if(entry?.startsWith('hangover-dinein-cart-'))localStorage.removeItem(entry);
           }
           localStorage.setItem(key,String(data.revision));
         }
-      } catch (_) { /* Storage may be blocked; checkout still verifies published prices. */ }
-      // Refresh open customer screens when an editor publishes. No stale menu prices are retained.
+      }catch(_){/* Storage can be disabled: current menu is still independently validated in kitchen. */}
+      // Open customers refresh when the menu or promotions are published, avoiding stale pricing.
       setInterval(async () => {
         try {
-          const latest = await get();
-          if (!latest.error && latest.data && latest.data.revision !== window.HS_CONTENT_REVISION) location.reload();
-        } catch (_) { /* Network failure alone must not claim a new menu was published. */ }
+          const latest=await get();
+          if(!latest.error && latest.data && latest.data.revision!==window.HS_CONTENT_REVISION)location.reload();
+        }catch(_){/* Do not claim a new menu exists on transient network failure. */}
       },60000);
     } catch (error) {
       window.HS_CONTENT_UNAVAILABLE = true;
