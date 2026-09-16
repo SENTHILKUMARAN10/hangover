@@ -5,31 +5,32 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex,nofollow,noarchive">
 <meta name="theme-color" content="#fcc724">
-<title>Owner order screen · Hangover Shakes</title>
+<title>Kitchen orders · Hangover Shakes</title>
 <link rel="stylesheet" href="style.css">
 <link rel="stylesheet" href="updates.css">
 <link rel="stylesheet" href="ordering.css">
+<link rel="stylesheet" href="dinein.css">
 </head>
 <body class="hs-admin-body">
-<a class="skip" href="#admin-main">Skip to orders</a>
+<a class="skip" href="#admin-main">Skip to kitchen orders</a>
 <header class="hs-admin-head wrap">
-  <a href="index.html" aria-label="Back to Hangover Shakes home"><img src="assets/logo.png" alt="Hangover Shakes" width="158" height="63"></a>
-  <nav aria-label="Owner controls"><span id="hs-owner-email" style="font-size:12px;font-weight:700"></span><a class="button" href="index.html">← View café</a><button type="button" class="button" id="hs-sign-out" hidden>Sign out</button></nav>
+  <a href="index.html" aria-label="Hangover Shakes home"><img src="assets/logo.png" alt="Hangover Shakes" width="158" height="63"></a>
+  <nav aria-label="Kitchen controls"><span id="hs-owner-email" style="font-size:12px;font-weight:700"></span><a class="button" href="table-qr.html">Print table QRs ↗</a><a class="button" href="index.html">← View café</a><button type="button" class="button" id="hs-sign-out" hidden>Sign out</button></nav>
 </header>
 <main class="hs-admin-main wrap" id="admin-main">
-  <section class="hs-admin-hero"><div><p class="eyebrow">HANGOVER SHAKES / STAFF ONLY</p><h1>ORDER <em>CONTROL.</em></h1><p>New ticket? Confirm it, cook it, and mark it ready. Orders exist only while this dashboard is connected and open.</p></div><span class="hs-admin-pill" id="hs-live-indicator">● Not connected</span></section>
+  <section class="hs-admin-hero"><div><p class="eyebrow">HANGOVER SHAKES / STAFF ONLY</p><h1>KITCHEN <em>CONTROL.</em></h1><p>Guests scan their table QR and send food requests here. Verify the table before accepting. Prepare the food, mark it ready, then mark it served.</p></div><span class="hs-admin-pill" id="hs-live-indicator">● Not connected</span></section>
   <section class="hs-admin-login" id="hs-login-panel">
-    <p class="eyebrow">OWNER ACCESS</p><h2>ONLY THE <em>BOSS.</em></h2>
-    <p>Sign in with the café owner's authorised email. An email sign-in link is required; merely knowing this page's address does not grant access.</p>
-    <form id="hs-login-form"><label>Owner email<input type="email" id="hs-login-email" name="email" required autocomplete="email" maxlength="180" placeholder="owner@example.com"></label><button type="submit" class="button" id="hs-login-submit">Email me a sign-in link ↗</button></form>
+    <p class="eyebrow">KITCHEN ACCESS</p><h2>ONLY THE <em>CREW.</em></h2>
+    <p>Sign in using the café's authorised kitchen email. Access requires a verified email sign-in link. Knowing this URL does not grant access to orders.</p>
+    <form id="hs-login-form"><label>Authorised staff email<input type="email" id="hs-login-email" name="email" required autocomplete="email" maxlength="180" placeholder="kitchen@example.com"></label><button type="submit" class="button" id="hs-login-submit">Email me a sign-in link ↗</button></form>
     <p role="status" aria-live="polite" id="hs-login-message"></p>
   </section>
   <section id="hs-admin-workspace" hidden>
-    <div class="hs-admin-alert" id="hs-admin-notice" role="status" aria-live="polite">Keep this page open on the café owner's device to receive orders. No historical orders are stored.</div>
-    <div class="hs-admin-metrics" aria-label="Order counts"><div class="hs-admin-metric"><strong id="hs-metric-new">0</strong><span>New orders</span></div><div class="hs-admin-metric"><strong id="hs-metric-active">0</strong><span>In progress</span></div><div class="hs-admin-metric"><strong id="hs-metric-ready">0</strong><span>Ready</span></div><div class="hs-admin-metric"><strong id="hs-metric-done">0</strong><span>Finished</span></div></div>
-    <div class="hs-admin-tabs" role="group" aria-label="Filter orders"><button type="button" data-filter="all" class="active">All orders</button><button type="button" data-filter="received">New</button><button type="button" data-filter="confirmed">Confirmed</button><button type="button" data-filter="preparing">Preparing</button><button type="button" data-filter="ready">Ready</button><button type="button" data-filter="completed">Completed</button><button type="button" data-filter="rejected">Declined</button></div>
+    <div class="hs-admin-alert" id="hs-admin-notice" role="status" aria-live="polite">Keep the kitchen display open and awake to receive food requests. No order history is stored.</div>
+    <div class="hs-admin-metrics" aria-label="Kitchen order counts"><div class="hs-admin-metric"><strong id="hs-metric-new">0</strong><span>New tickets</span></div><div class="hs-admin-metric"><strong id="hs-metric-active">0</strong><span>Cooking</span></div><div class="hs-admin-metric"><strong id="hs-metric-ready">0</strong><span>Ready</span></div><div class="hs-admin-metric"><strong id="hs-metric-done">0</strong><span>Finished</span></div></div>
+    <div class="hs-admin-tabs" role="group" aria-label="Filter kitchen tickets"><button type="button" data-filter="all" class="active">All tickets</button><button type="button" data-filter="received">New</button><button type="button" data-filter="confirmed">Accepted</button><button type="button" data-filter="preparing">Preparing</button><button type="button" data-filter="ready">Ready</button><button type="button" data-filter="served">Served</button><button type="button" data-filter="rejected">Declined</button></div>
     <div class="hs-order-grid" id="hs-admin-orders" aria-live="polite"></div>
-    <p class="hs-admin-alert">Temporary live queue: closing/reloading this tab, losing connectivity or restarting the real-time service can lose orders. For important orders, use WhatsApp or a persistent order system.</p>
+    <p class="hs-admin-alert">Temporary live queue: keep the kitchen tablet awake. Refreshing, closing, disconnecting or restarting the realtime service can lose food requests. Staff must confirm tables and keep a manual fallback.</p>
   </section>
 </main>
 <script src="menu-data.js" defer></script>
