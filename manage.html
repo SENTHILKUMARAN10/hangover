@@ -1,50 +1,10 @@
 <!doctype html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="robots" content="noindex,nofollow,noarchive">
-<meta name="theme-color" content="#fcc724">
-<title>Manage menu & offers · Hangover Shakes</title>
-<link rel="stylesheet" href="style.css">
-<link rel="stylesheet" href="updates.css">
-<link rel="stylesheet" href="ordering.css">
-<link rel="stylesheet" href="dinein.css">
-<link rel="stylesheet" href="cms.css">
-</head>
-<body class="hs-admin-body">
-<a class="skip" href="#manage-main">Skip to menu management</a>
-<header class="hs-admin-head wrap">
-  <a href="index.html" aria-label="Hangover Shakes home"><img src="assets/logo.png" width="158" height="63" alt="Hangover Shakes"></a>
-  <nav aria-label="Staff navigation"><a class="button" href="admin.html">← Kitchen</a><a class="button" href="index.html">View website ↗</a><button type="button" class="button" id="cms-logout" hidden>Sign out</button></nav>
-</header>
-<main class="hs-admin-main wrap" id="manage-main">
-  <section class="hs-admin-hero"><div><p class="eyebrow">HANGOVER SHAKES / MANAGER ACCESS</p><h1>MENU <em>CONTROL.</em></h1><p>Edit dishes and prices, mark sold-out products unavailable, and publish your café's offers — no code edits required.</p></div><span class="hs-admin-pill" id="cms-badge">● Not signed in</span></section>
-  <p id="cms-notice" class="hs-admin-alert" role="status" aria-live="polite">Managers need a verified sign-in link. Kitchen access alone does not permit menu edits.</p>
-  <section class="hs-admin-login" id="cms-login">
-    <p class="eyebrow">AUTHORISED MANAGERS ONLY</p><h2>THE <em>BOSS.</em></h2>
-    <p>Enter your manager email. The café administrator must grant your account editing permission in the database. There is no shared password or public edit link.</p>
-    <form id="cms-login-form"><label>Manager email<input type="email" name="email" maxlength="180" autocomplete="email" required placeholder="manager@example.com"></label><button class="button" type="submit">Send secure sign-in link ↗</button></form>
-    <p id="cms-login-status" role="status" aria-live="polite"></p>
-    <a href="manage.html?demo=1" class="text-link">Explore design with demo data (no publishing) ↗</a>
-  </section>
-  <section id="cms-workspace" hidden>
-    <div class="cms-toolbar"><div><p class="eyebrow" id="cms-version">DRAFT / NOT PUBLISHED</p><h2>CONTENT STUDIO.</h2><p>Make your edits, review the changes, then publish once. Changes appear on newly opened customer pages without redeploying.</p></div><div class="cms-toolbar-actions"><button id="cms-preview" type="button" class="button">Review changes ↗</button><button id="cms-publish" type="button" class="button">Publish to website ↗</button></div></div>
-    <div class="cms-tabs" role="group" aria-label="Edit content"><button type="button" data-tab="menu" class="active">🍔 Menu & prices</button><button type="button" data-tab="offers">🔥 Offers</button></div>
-    <div id="cms-menu-panel">
-      <div class="cms-control-row"><label>Menu category<select id="cms-category"></select></label><button type="button" class="button" id="cms-add-category">+ New category</button></div>
-      <div class="cms-category-editor"><label>Category name<input id="cms-category-name" maxlength="80" placeholder="E.g. Brownies"></label><label>Show in filter<select id="cms-category-group"><option value="chicken">Chicken</option><option value="meals">Meals</option><option value="desserts">Desserts</option><option value="drinks">Drinks</option><option value="shakes">Shakes</option></select></label><button id="cms-remove-category" type="button" class="cms-delete">Delete category</button></div>
-      <p class="cms-help">Prices: ₹100 or ₹100 / ₹160. For two prices, give options in the item name, e.g. Classic — Roll / Plate. Sold-out items disappear from ordering after publishing.</p>
-      <div id="cms-item-list" class="cms-list" aria-live="polite"></div>
-      <button id="cms-add-item" type="button" class="button">+ Add menu item</button>
-    </div>
-    <div id="cms-offers-panel" hidden><p class="cms-help">Only active offers appear in the website popup. Disable or delete an expired offer, then publish. Confirm promotion terms with the café before activating.</p><div id="cms-offer-list" class="cms-list" aria-live="polite"></div><button type="button" id="cms-add-offer" class="button">+ Add offer</button></div>
-    <section id="cms-review-panel" class="cms-review" hidden aria-live="polite"></section>
-  </section>
-</main>
-<script src="menu-data.js" defer></script>
-<script src="ordering-config.js" defer></script>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.91.0" defer></script>
-<script src="cms-admin.js" defer></script>
-</body>
-</html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow,noarchive"><meta name="theme-color" content="#fcc724"><title>Manage menu & offers · Hangover Shakes</title><link rel="stylesheet" href="style.css"><link rel="stylesheet" href="updates.css"><link rel="stylesheet" href="ordering.css"><link rel="stylesheet" href="dinein.css"><link rel="stylesheet" href="cms.css"></head>
+<body class="hs-admin-body"><a class="skip" href="#manage-main">Skip to menu management</a><header class="hs-admin-head wrap"><a href="admin.html" aria-label="Admin home"><img src="assets/logo.png" width="158" height="63" alt="Hangover Shakes"></a><nav aria-label="Staff navigation"><a class="button" href="admin.html">← Admin home</a><a class="button" href="kitchen.html">Kitchen</a><a class="button" href="staff.html">Staff</a><a class="button" href="index.html">Website ↗</a><button type="button" class="button" id="cms-logout" hidden>Sign out</button></nav></header>
+<main class="hs-admin-main wrap" id="manage-main"><section class="hs-admin-hero"><div><p class="eyebrow">HANGOVER SHAKES / MANAGER ACCESS</p><h1>MENU <em>CONTROL.</em></h1><p>Update dishes, prices, availability and offers without changing website code.</p></div><span class="hs-admin-pill" id="cms-badge">● Not signed in</span></section>
+<p id="cms-notice" class="hs-admin-alert" role="status" aria-live="polite">Open Admin HQ to sign in with the café password. Managers need separate publishing permission.</p>
+<section class="hs-admin-login" id="cms-login"><p class="eyebrow">MANAGER ACCESS</p><h2>THE <em>BOSS.</em></h2><p>Sign in once at Admin HQ. Kitchen access does not automatically grant permission to publish menu changes.</p><a href="admin.html" class="button">Open Admin HQ ↗</a><form id="cms-login-form" hidden><input type="email" name="email"><button type="submit" disabled>Sign-in handled by Admin HQ</button></form><p id="cms-login-status" role="status" aria-live="polite"></p><a href="manage.html?demo=1" class="text-link">Explore menu editor with sample data ↗</a></section>
+<section id="cms-workspace" hidden><div class="cms-toolbar"><div><p class="eyebrow" id="cms-version">DRAFT / NOT PUBLISHED</p><h2>CONTENT STUDIO.</h2><p>Make edits, review, then publish once. Changes show on new customer visits without redeployment.</p></div><div class="cms-toolbar-actions"><button id="cms-preview" type="button" class="button">Review changes ↗</button><button id="cms-publish" type="button" class="button">Publish to website ↗</button></div></div>
+<div class="cms-tabs" role="group" aria-label="Edit content"><button type="button" data-tab="menu" class="active">🍔 Menu & prices</button><button type="button" data-tab="offers">🔥 Offers</button></div><div id="cms-menu-panel"><div class="cms-control-row"><label>Menu category<select id="cms-category"></select></label><button type="button" class="button" id="cms-add-category">+ New category</button></div><div class="cms-category-editor"><label>Category name<input id="cms-category-name" maxlength="80" placeholder="E.g. Brownies"></label><label>Show in filter<select id="cms-category-group"><option value="chicken">Chicken</option><option value="meals">Meals</option><option value="desserts">Desserts</option><option value="drinks">Drinks</option><option value="shakes">Shakes</option></select></label><button id="cms-remove-category" type="button" class="cms-delete">Delete category</button></div><p class="cms-help">Prices: ₹100 or ₹100 / ₹160. For two prices, name both options: Classic — Roll / Plate. Mark sold-out products unavailable.</p><div id="cms-item-list" class="cms-list" aria-live="polite"></div><button id="cms-add-item" type="button" class="button">+ Add menu item</button></div>
+<div id="cms-offers-panel" hidden><p class="cms-help">Only active offers appear on the website. Disable or delete expired offers and publish.</p><div id="cms-offer-list" class="cms-list" aria-live="polite"></div><button type="button" id="cms-add-offer" class="button">+ Add offer</button></div><section id="cms-review-panel" class="cms-review" hidden aria-live="polite"></section></section></main>
+<script src="menu-data.js" defer></script><script src="ordering-config.js" defer></script><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.91.0" defer></script><script src="cms-admin.js" defer></script></body></html>
