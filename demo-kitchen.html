@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow,noarchive">
+<meta name="theme-color" content="#fcc724">
+<title>Kitchen demo · Hangover Shakes</title>
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="updates.css">
+<link rel="stylesheet" href="ordering.css">
+<link rel="stylesheet" href="dinein.css">
+<style>
+.hs-demo-banner{position:sticky;top:0;z-index:100;background:#291c0e;color:#fff8da;text-align:center;padding:12px 16px;font-weight:900;line-height:1.45;font-size:13px;letter-spacing:.02em}
+.hs-demo-banner strong{color:#fcc724}.hs-demo-actions{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:18px 0 8px}.hs-demo-actions button{cursor:pointer;min-height:44px}.hs-order-actions button{cursor:pointer}.hs-demo-help{font-size:12px;line-height:1.6;color:var(--muted);max-width:680px}.hs-order-badge{display:inline-flex;align-items:center}.hs-demo-alert{border:2px solid #291c0e;background:#fff5cd;padding:16px;border-radius:12px;font-size:13px;line-height:1.65;margin:18px 0}
+@media(max-width:600px){.hs-demo-banner{font-size:11px;padding:10px}.hs-demo-actions .button{width:100%;justify-content:center}}
+</style>
+</head>
+<body class="hs-admin-body">
+<a class="skip" href="#admin-main">Skip to demo tickets</a>
+<div class="hs-demo-banner">🧪 <strong>DEMO PREVIEW ONLY</strong> · Sample orders · No sign-in · No real kitchen connection</div>
+<header class="hs-admin-head wrap">
+  <a href="index.html" aria-label="Hangover Shakes home"><img src="assets/logo.png" alt="Hangover Shakes" width="158" height="63"></a>
+  <nav aria-label="Preview navigation"><a class="button" href="table-qr.html">Table QR designs ↗</a><a class="button" href="index.html?table=1">Table 01 menu ↗</a></nav>
+</header>
+<main class="hs-admin-main wrap" id="admin-main">
+  <section class="hs-admin-hero"><div><p class="eyebrow">HANGOVER SHAKES / INTERACTIVE DESIGN PREVIEW</p><h1>KITCHEN <em>CONTROL.</em></h1><p>See how table QR orders appear to kitchen staff. Try accepting, preparing, marking ready and serving sample tickets.</p></div><span class="hs-admin-pill" id="hs-live-indicator">● DEMO · Not live</span></section>
+  <section id="hs-admin-workspace">
+    <div class="hs-demo-alert" role="status" id="hs-admin-notice"><strong>Preview mode:</strong> These are fictional orders. Buttons change only this page while it is open; nothing is sent to customers or stored. The real kitchen dashboard still requires a secure authorised staff login and backend setup.</div>
+    <div class="hs-admin-metrics" aria-label="Demo kitchen counts">
+      <div class="hs-admin-metric"><strong id="hs-metric-new">0</strong><span>New tickets</span></div>
+      <div class="hs-admin-metric"><strong id="hs-metric-active">0</strong><span>Cooking</span></div>
+      <div class="hs-admin-metric"><strong id="hs-metric-ready">0</strong><span>Ready</span></div>
+      <div class="hs-admin-metric"><strong id="hs-metric-done">0</strong><span>Finished</span></div>
+    </div>
+    <div class="hs-admin-tabs" role="group" aria-label="Filter demo tickets">
+      <button type="button" data-filter="all" class="active" aria-pressed="true">All tickets</button>
+      <button type="button" data-filter="received" aria-pressed="false">New</button>
+      <button type="button" data-filter="confirmed" aria-pressed="false">Accepted</button>
+      <button type="button" data-filter="preparing" aria-pressed="false">Preparing</button>
+      <button type="button" data-filter="ready" aria-pressed="false">Ready</button>
+      <button type="button" data-filter="served" aria-pressed="false">Served</button>
+      <button type="button" data-filter="rejected" aria-pressed="false">Declined</button>
+    </div>
+    <div class="hs-order-grid" id="hs-admin-orders" aria-live="polite"></div>
+    <div class="hs-demo-actions"><button type="button" class="button" id="hs-demo-reset">↺ Reset sample orders</button><p class="hs-demo-help">Tip: tap “Accept order” on a new ticket, then “Start preparing”, “Mark ready”, and “Mark served”. Use the status filters above to check each stage.</p></div>
+    <p class="hs-admin-alert">This demonstration is deliberately isolated from real ordering. Actual orders remain disabled until the café's secure kitchen service has been connected and tested with two devices.</p>
+  </section>
+</main>
+<script>
+(() => {
+  'use strict';
+  const initial = [
+    {id:'DEMO-001',table:1,status:'received',minutes:2,notes:'No onion in the shawarma.',items:[['Classic Shawarma · Roll',2,100],['Mint Mojito',1,70]]},
+    {id:'DEMO-002',table:3,status:'confirmed',minutes:5,notes:'',items:[['Chicken Burger',1,130],['Peri Peri Fries',2,90]]},
+    {id:'DEMO-003',table:7,status:'preparing',minutes:8,notes:'Brownie after the food, please.',items:[['Hot Brownie with Ice Cream',1,100],['Chocolate Shake',2,140]]},
+    {id:'DEMO-004',table:2,status:'ready',minutes:12,notes:'',items:[['Veg Pizza',1,150],['Blue Curacao',2,70]]}
+  ];
+  let orders = initial.map(ticket => ({...ticket,items:ticket.items.map(row => [...row])}));
+  let filter = 'all';
+  const grid = document.getElementById('hs-admin-orders');
+  const notice = document.getElementById('hs-admin-notice');
+  const money = amount => '₹' + amount.toLocaleString('en-IN');
+  const labels = {received:'New',confirmed:'Accepted',preparing:'Preparing',ready:'Ready',served:'Served',rejected:'Declined'};
+  const transitions = {received:[['confirmed','Accept order'],['rejected','Decline']],confirmed:[['preparing','Start preparing']],preparing:[['ready','Mark ready']],ready:[['served','Mark served']]};
+  function render(){
+    document.getElementById('hs-metric-new').textContent = orders.filter(t => t.status === 'received').length;
+    document.getElementById('hs-metric-active').textContent = orders.filter(t => ['confirmed','preparing'].includes(t.status)).length;
+    document.getElementById('hs-metric-ready').textContent = orders.filter(t => t.status === 'ready').length;
+    document.getElementById('hs-metric-done').textContent = orders.filter(t => ['served','rejected'].includes(t.status)).length;
+    const selected = orders.filter(t => filter === 'all' || t.status === filter);
+    grid.innerHTML = selected.length ? selected.map(ticket => {
+      const total = ticket.items.reduce((sum, row) => sum + row[1]*row[2],0);
+      return `<article class="hs-order-card ${ticket.status === 'received' ? 'is-new' : ''}"><div class="hs-order-top"><div><span class="hs-kitchen-table">TABLE ${String(ticket.table).padStart(2,'0')}</span><h3>#${ticket.id}</h3><p class="hs-order-meta">Sample ticket · ${ticket.minutes} min ago</p><p class="hs-kitchen-check">Verify the guest is seated at Table ${ticket.table} before accepting.</p></div><span class="hs-order-badge">${labels[ticket.status]}</span></div><div class="hs-order-lines">${ticket.items.map(row => `<p><span>${row[1]} × ${row[0]}</span><strong>${money(row[1]*row[2])}</strong></p>`).join('')}<p><strong>Menu subtotal</strong><strong>${money(total)}</strong></p></div>${ticket.notes ? `<p class="hs-order-notes"><strong>Special note:</strong> ${ticket.notes}</p>` : ''}<div class="hs-order-actions">${(transitions[ticket.status] || []).map(([next,text]) => `<button type="button" data-id="${ticket.id}" data-state="${next}" class="${next === 'rejected' ? 'secondary' : ''}">${text} ↗</button>`).join('')}</div></article>`;
+    }).join('') : '<div class="hs-admin-empty"><h3>No sample tickets here.</h3><p>Choose All tickets or reset the demo to explore the workflow.</p></div>';
+  }
+  grid.addEventListener('click', event => {
+    const button = event.target.closest('button[data-id][data-state]');
+    if (!button) return;
+    const ticket = orders.find(t => t.id === button.dataset.id);
+    if (!ticket || !(transitions[ticket.status] || []).some(([next]) => next === button.dataset.state)) return;
+    ticket.status = button.dataset.state;
+    notice.textContent = `🧪 Demo only: ${ticket.id} for Table ${ticket.table} changed to ${labels[ticket.status]}. No customer was notified.`;
+    render();
+  });
+  document.querySelectorAll('[data-filter]').forEach(button => button.addEventListener('click', () => {
+    filter = button.dataset.filter;
+    document.querySelectorAll('[data-filter]').forEach(tab => {const selected = tab === button;tab.classList.toggle('active',selected);tab.setAttribute('aria-pressed',String(selected));});
+    render();
+  }));
+  document.getElementById('hs-demo-reset').addEventListener('click', () => {
+    orders = initial.map(ticket => ({...ticket,items:ticket.items.map(row => [...row])}));
+    filter='all';
+    document.querySelectorAll('[data-filter]').forEach(tab => {const selected = tab.dataset.filter === 'all';tab.classList.toggle('active',selected);tab.setAttribute('aria-pressed',String(selected));});
+    notice.textContent = '🧪 Demo reset. All sample tickets restored; no real orders or kitchen systems were changed.';
+    render();
+  });
+  render();
+})();
+</script>
+</body>
+</html>
