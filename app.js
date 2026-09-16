@@ -235,3 +235,21 @@ document.addEventListener('keydown', (event) => {
 let showOffers = true;
 try { showOffers = !sessionStorage.getItem('hangoverOffersSeen'); } catch (_) {}
 if (showOffers) window.setTimeout(openOffers, 900);
+
+/* Load the additive ordering UI after the existing static menu is rendered.
+   Missing realtime configuration must never pretend to place orders. */
+const orderingStyles = document.createElement('link');
+orderingStyles.rel = 'stylesheet';
+orderingStyles.href = 'ordering.css';
+document.head.append(orderingStyles);
+(async () => {
+  for (const src of ['ordering-config.js', 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.91.0', 'ordering.js']) {
+    await new Promise(resolve => {
+      const script = document.createElement('script');
+      script.src = src;
+      script.onload = resolve;
+      script.onerror = () => { console.warn('Optional ordering dependency unavailable:', src); resolve(); };
+      document.body.append(script);
+    });
+  }
+})();
