@@ -23,10 +23,14 @@ jobs:
           node --check ordering-config.js
           node --check ordering.js
           node --check admin.js
+          node --check tests/ordering-contract.test.cjs
+
+      - name: Validate complete menu and checkout contracts
+        run: node tests/ordering-contract.test.cjs
 
       - name: Check required website files
         run: |
-          for file in index.html admin.html style.css updates.css app.js menu-data.js ordering.js ordering.css admin.js ordering-config.js supabase-realtime-policies.sql ORDERING_SETUP.md assets/logo.png assets/crew.png; do
+          for file in index.html admin.html style.css updates.css app.js menu-data.js ordering.js ordering.css admin.js ordering-config.js supabase-realtime-policies.sql ORDERING_SETUP.md tests/ordering-contract.test.cjs assets/logo.png assets/crew.png; do
             test -s "$file"
           done
 
