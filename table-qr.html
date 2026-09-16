@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow,noarchive">
+<meta name="theme-color" content="#fcc724">
+<title>Print table QR codes · Hangover Shakes</title>
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="updates.css">
+<link rel="stylesheet" href="ordering.css">
+<link rel="stylesheet" href="dinein.css">
+<style>
+.hs-qr-toolbar{max-width:1120px;margin:25px auto 35px;padding:20px;border:2px solid var(--ink);border-radius:14px;background:var(--pale);display:flex;align-items:end;gap:15px;flex-wrap:wrap}.hs-qr-toolbar label{font-weight:900;font-size:13px;display:grid;gap:6px}.hs-qr-toolbar input{width:115px;min-height:46px;margin:0}.hs-qr-toolbar button{min-height:46px}.hs-qr-toolbar p{flex-basis:100%;font-size:12px;line-height:1.6;margin:0}.hs-qr-grid{max-width:1120px;margin:0 auto 70px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}.hs-qr-ticket{min-width:0;break-inside:avoid;page-break-inside:avoid;background:#fffdf0;border:3px solid #291c0e;border-radius:17px;padding:25px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:10px}.hs-qr-ticket img{width:135px;max-width:100%;height:auto}.hs-qr-ticket h2{font-size:clamp(32px,5vw,52px);margin:0;font-family:'Barlow Condensed',Impact,sans-serif}.hs-qr-ticket strong{font-size:clamp(24px,4vw,38px)}.hs-qr-ticket p{font-size:12px;line-height:1.5;margin:0}.hs-qr-ticket .qr{width:164px;min-height:164px;display:grid;place-items:center;border:8px solid white}.hs-qr-ticket .qr img,.hs-qr-ticket .qr canvas{width:148px!important;height:148px!important;max-width:100%}.hs-qr-url{font-size:10px!important;overflow-wrap:anywhere}.hs-qr-error{color:#982a15;font-weight:900}.hs-qr-ticket .hs-qr-brand{font-size:12px;font-weight:1000;letter-spacing:1px}
+@media(max-width:650px){.hs-qr-grid{grid-template-columns:1fr;padding:0 15px}.hs-qr-toolbar{margin:20px 15px}}
+@media print{@page{size:A4;margin:10mm}body{background:#fff!important}.hs-admin-head,.hs-admin-hero,.hs-qr-toolbar,.hs-qr-foot{display:none!important}.hs-qr-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9mm;margin:0;max-width:none}.hs-qr-ticket{border:2px solid #000;box-shadow:none;padding:8mm;min-height:110mm}.hs-qr-ticket h2{font-size:32px}.hs-qr-ticket strong{font-size:26px}.hs-qr-ticket .qr{min-height:155px}.hs-qr-ticket .qr img,.hs-qr-ticket .qr canvas{width:140px!important;height:140px!important}}
+</style>
+</head>
+<body class="hs-admin-body">
+<header class="hs-admin-head wrap"><a href="index.html"><img src="assets/logo.png" width="158" height="63" alt="Hangover Shakes"></a><nav><a class="button" href="admin.html">← Kitchen dashboard</a></nav></header>
+<main class="wrap">
+<section class="hs-admin-hero"><div><p class="eyebrow">FOR THE CAFÉ TEAM · PRINT & PLACE</p><h1>TABLE <em>QR CODES.</em></h1><p>Make a different QR for every table. Print the cards and attach them to the matching physical tables.</p></div></section>
+<form class="hs-qr-toolbar" id="qr-form">
+<label>First table<input type="number" name="first" min="1" max="30" value="1" required></label>
+<label>Last table<input type="number" name="last" min="1" max="30" value="10" required></label>
+<button class="button" type="submit">Generate table cards ↗</button>
+<button class="button" id="print-qr" type="button" disabled>Print QR cards ↗</button>
+<p>The QR links point to <strong>www.hangovershakes.cafe</strong>. Generate and print only after the updated site is deployed there. Table numbers alone do not prevent remote orders: the kitchen must verify the guest is seated.</p>
+</form>
+<p class="hs-qr-error" id="qr-error" role="status" aria-live="polite"></p>
+<div class="hs-qr-grid" id="qr-grid" aria-label="Printable table QR codes"></div>
+<p class="hs-qr-foot" style="text-align:center;padding:0 0 45px;font-size:13px">These printed codes contain only the public website link and table number. They contain no staff credentials or secret keys.</p>
+</main>
+<script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js" defer></script>
+<script src="table-qr.js" defer></script>
+</body>
+</html>
