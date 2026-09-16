@@ -15,7 +15,7 @@
 <a class="skip" href="#admin-main">Skip to kitchen orders</a>
 <header class="hs-admin-head wrap">
   <a href="index.html" aria-label="Hangover Shakes home"><img src="assets/logo.png" alt="Hangover Shakes" width="158" height="63"></a>
-  <nav aria-label="Kitchen controls"><span id="hs-owner-email" style="font-size:12px;font-weight:700"></span><a class="button" href="table-qr.html">Print table QRs ↗</a><a class="button" href="index.html">← View café</a><button type="button" class="button" id="hs-sign-out" hidden>Sign out</button></nav>
+  <nav aria-label="Kitchen controls"><span id="hs-owner-email" style="font-size:12px;font-weight:700"></span><a class="button" href="manage.html">Manage menu & offers ↗</a><a class="button" href="table-qr.html">Print table QRs ↗</a><a class="button" href="index.html">← View café</a><button type="button" class="button" id="hs-sign-out" hidden>Sign out</button></nav>
 </header>
 <main class="hs-admin-main wrap" id="admin-main">
   <section class="hs-admin-hero"><div><p class="eyebrow">HANGOVER SHAKES / STAFF ONLY</p><h1>KITCHEN <em>CONTROL.</em></h1><p>Guests scan their table QR and send food requests here. Verify the table before accepting. Prepare the food, mark it ready, then mark it served.</p></div><span class="hs-admin-pill" id="hs-live-indicator">● Not connected</span></section>
@@ -36,6 +36,7 @@
 <script src="menu-data.js" defer></script>
 <script src="ordering-config.js" defer></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.91.0" defer></script>
-<script src="admin.js" defer></script>
+<script src="cms-public.js" defer></script>
+<script src="cms-kitchen.js" defer></script>
 </body>
 </html>
