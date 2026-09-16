@@ -40,7 +40,7 @@ const customer=read('ordering.js'),kitchen=read('admin.js'),config=read('orderin
 const policies=read('supabase-realtime-policies.sql'),setup=read('ORDERING_SETUP.md');
 const adminHtml=read('admin.html'),qrHtml=read('table-qr.html'),qrJs=read('table-qr.js'),site=read('app.js');
 assert.match(customer,/params\.get\('table'\)/,'Table URL not read');
-assert.match(customer,/tableNumber\s*:/,'Checkout payload missing table number');
+assert.match(customer,/table:tableNumber/,'Checkout payload missing table number');
 assert.match(customer,/fulfillment:'dine-in'/,'Not dine-in checkout');
 assert.match(customer,/cart\.set\(/,'Cart controls missing');
 assert.match(customer,/form\.reportValidity\(\)/,'Missing checkout validation');
