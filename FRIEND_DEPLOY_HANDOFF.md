@@ -1,11 +1,11 @@
-# Hangover Shakes — deployment handoff for the friend managing the domain
+# Hangover Shakes — handoff for the friend managing www.hangovershakes.cafe
 
-Website: `https://www.hangovershakes.cafe/` (the domain is managed by the friend; **domain connection has not been verified by this repository**).
-Repository: `https://github.com/SENTHILKUMARAN10/hangover`, branch `main`.
+Repository: https://github.com/SENTHILKUMARAN10/hangover (`main`).
+Domain: https://www.hangovershakes.cafe/ — friend manages existing hosting. Domain connectivity is NOT verified by this code repository.
 
-## Bring the cloned project up to date
+## Update the existing clone without damaging your deployment
 
-From the EXISTING local Hangover Shakes project directory:
+From the EXISTING Hangover Shakes checkout on your laptop:
 
 ```bash
 git status
@@ -15,18 +15,23 @@ git pull --ff-only origin main
 node tests/ordering-contract.test.cjs
 ```
 
-If `git status` shows changes or `git pull --ff-only` fails, review them and reconcile them instead of force-resetting. Do not delete the friend's hosting configuration, domain settings, assets, or unpublished work. There is **no open pull request to approve**: changes were committed straight to `main`.
+If local files are modified or the fast-forward fails, resolve them carefully; don't force reset/delete hosting settings, existing assets, other work, or DNS records. No pull request is waiting: changes were committed straight to `main`.
 
-Redeploy the updated **entire** project through the hosting service already connected to the purchased domain, preserving its existing domain and SSL configuration. This is a static site; `index.html` is the public page and `admin.html` is the owner screen. Keep the admin page out of the public navigation; a hidden URL is not a substitute for authentication.
+Redeploy the complete updated static project through the SAME host currently connected to the purchased domain. Preserve HTTPS/domain and existing configuration. `index.html` is public café marketing + QR-table guest ordering, `admin.html` is the authenticated kitchen screen, and `table-qr.html` prints physical QR signs. Check all three routes and browser developer-console asset errors.
 
-## Critical: checkout is NOT ready for customers simply because the files are deployed
+## The actual product: ONLY guests seated INSIDE the café
 
-- The public `ordering-config.js` has empty `supabaseUrl` and `publishableKey` by design. Until they are configured, the Place pickup order button is disabled and the cart offers a WhatsApp draft instead. A WhatsApp draft is **not sent** until a person taps Send and the café acknowledges it.
-- First obtain the real café owner's authorised email, and configure a **dedicated café-controlled** Supabase project for owner authentication and private ephemeral Realtime. See `ORDERING_SETUP.md` and `supabase-realtime-policies.sql` for the exact policy and configuration process. Replace `cafe-owner@example.com` in the SQL before applying it. Never add a secret/service-role key or password to JavaScript, GitHub, or frontend hosting settings.
-- In Supabase Auth configure both Site URL and allowed redirect URL for `https://www.hangovershakes.cafe/admin.html` (and the bare-domain equivalent only if the hosting configuration uses it). Protect channels with the SQL policies and disable public Realtime channels. Never reuse another business's Supabase database.
-- **Two-device acceptance test:** owner signs in on one device and sees LIVE; customer on a separate device adds a menu variant, validates their phone, places a pickup order, and receives receipt → confirmed → preparing → ready → completed. Test offline owner, declined orders, refresh, small mobile viewport and WhatsApp fallback. Check the real domain's CSS, images, and browser console. Do not enable/advertise live ordering before this passes.
-- This is intentionally a temporary, no-orders-database model. Orders can disappear on refresh, disconnect, or phone sleep; no push-notification guarantee, online payments or delivery are provided. For reliable customer ordering, use a persistent secured service instead.
+1. Each table gets a printed unique URL such as `https://www.hangovershakes.cafe/?table=01` or `?table=02`, created at `/table-qr.html`. Generate only the physical table numbers needed (1–30 supported by default); scan each printed code and verify it opens the matching table number.
+2. A generic visit to the homepage may browse the menu but CANNOT add food to the cart. A table QR link shows the table-number banner, cart and dine-in checkout. Customer chooses food and variants and optionally enters a name/notes; NO WhatsApp orders, customer phone number, pickup, online delivery or online payment are part of this flow.
+3. Kitchen opens `/admin.html`, signs in using the café-approved kitchen/owner email, keeps the tablet awake, verifies actual occupancy of the displayed table, and works received → accepted → preparing → ready → served. Customer sees live status while the page remains open; staff physically serve food at the table.
+4. A photographed/forwarded QR can be used from outside. This is NOT proof of physical location; staff MUST check that the table is occupied before accepting the order. Real enforceable on-premise validation would need a server-mediated access mechanism and rate limits.
 
-## What is already prepared
+## STOP: do not launch real orders just by deploying code
 
-The full menu, cart, variant selection, quantity controls, pickup form, WhatsApp fallback, owner-only order interface, status controls, shared styling, and GitHub validation checks are committed. Every push runs JavaScript syntax checks, the menu/ordering contract test, required-file checks, and HTML/local-asset reference checks. These are automated code checks, **not** a real checkout test.
+`ordering-config.js` deliberately has EMPTY `supabaseUrl` and `publishableKey`. The online order button will remain DISABLED until a new café-owned realtime service and staff Auth are configured and thoroughly tested. No WhatsApp fallback is included: guests should order directly with staff during downtime.
+
+Follow `ORDERING_SETUP.md` to create an isolated café-controlled Supabase project (transient messages only, no orders table), authorise only the verified café kitchen email, replace all `kitchen@example.com` placeholders in the RLS SQL, disable public Realtime channels, set Auth redirect to `https://www.hangovershakes.cafe/admin.html`, and insert ONLY the public project URL/publishable key into config. NEVER commit API secret/service role, password, OTP or signing key. Do not reuse another business's project.
+
+**Mandatory two-device end-to-end test:** kitchen tablet must show LIVE. Second phone scans table 01, selects a single-price product and a two-price variant, submits, gets acknowledgement, sees accepted/preparing/ready/served. Kitchen displays the correct table, reconstructs catalog prices, and staff verify table occupancy. Repeat with table 02, offline kitchen, incorrect authorised email, status failure, rejected request, invalid table URL, browser reload, mobile layout and duplicate/spam attempts. Check QR image scan quality and HTTPS/domain. The static CI checks are not end-to-end tests.
+
+No orders are stored in a database, so a sleeping/closed/refreshed kitchen tab or broken connection can LOSE orders. The café needs manual contingency and may require a reliable persistent backend before taking real food orders. DO NOT promise guaranteed notifications, remote-order prevention or durable order history with this implementation.
