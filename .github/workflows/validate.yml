@@ -16,30 +16,27 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Check JavaScript syntax
+      - name: Check all JavaScript syntax
         run: |
           node --check app.js
           node --check menu-data.js
+          node --check ordering-config.js
+          node --check ordering.js
+          node --check admin.js
 
       - name: Check required website files
         run: |
-          test -s index.html
-          test -s style.css
-          test -s updates.css
-          test -s app.js
-          test -s menu-data.js
-          test -s assets/logo.png
-          test -s assets/crew.png
+          for file in index.html admin.html style.css updates.css app.js menu-data.js ordering.js ordering.css admin.js ordering-config.js supabase-realtime-policies.sql ORDERING_SETUP.md assets/logo.png assets/crew.png; do
+            test -s "$file"
+          done
 
-      - name: Validate local HTML references
+      - name: Validate both HTML documents and local references
         run: |
           python - <<'PY'
           from html.parser import HTMLParser
           from pathlib import Path
 
           root = Path('.')
-          html = (root / 'index.html').read_text(encoding='utf-8')
-
           class Parser(HTMLParser):
               def __init__(self):
                   super().__init__()
@@ -51,23 +48,20 @@ jobs:
                   if tag == 'link' and data.get('href'):
                       self.refs.append(data['href'])
 
-          parser = Parser()
-          parser.feed(html)
-          missing = []
-          for ref in parser.refs:
-              if ref.startswith(('http://', 'https://', 'data:', '#')):
-                  continue
-              path = ref.split('?', 1)[0].split('#', 1)[0]
-              if path and not (root / path).exists():
-                  missing.append(path)
-
-          if missing:
-              raise SystemExit('Missing local references: ' + ', '.join(sorted(set(missing))))
-
-          if not html.lstrip().lower().startswith('<!doctype html>'):
-              raise SystemExit('index.html does not start with a doctype')
-          if '</html>' not in html.lower():
-              raise SystemExit('index.html is missing closing html tag')
-
-          print('HTML references OK')
+          for html_file in ('index.html', 'admin.html'):
+              html = (root / html_file).read_text(encoding='utf-8')
+              parser = Parser()
+              parser.feed(html)
+              missing = []
+              for ref in parser.refs:
+                  if ref.startswith(('http://', 'https://', 'data:', '#')):
+                      continue
+                  path = ref.split('?', 1)[0].split('#', 1)[0]
+                  if path and not (root / path).is_file():
+                      missing.append(path)
+              if missing:
+                  raise SystemExit(f'{html_file} missing: ' + ', '.join(sorted(set(missing))))
+              if not html.lstrip().lower().startswith('<!doctype html>') or '</html>' not in html.lower():
+                  raise SystemExit(f'{html_file} invalid doctype or closing tag')
+              print(f'{html_file}: local references OK')
           PY
