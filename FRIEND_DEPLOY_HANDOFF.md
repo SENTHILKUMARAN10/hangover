@@ -1,11 +1,8 @@
 # Hangover Shakes — handoff for the friend managing www.hangovershakes.cafe
 
-Repository: https://github.com/SENTHILKUMARAN10/hangover (`main`).
-Domain: https://www.hangovershakes.cafe/ — friend manages existing hosting. Domain connectivity has NOT been verified by this repository.
+Repo: https://github.com/SENTHILKUMARAN10/hangover (`main`). The friend manages existing hosting; connection to the paid domain has not been verified by the repo.
 
-## Update the existing clone safely
-
-In your EXISTING Hangover Shakes project folder:
+## Safely update the existing clone
 
 ```bash
 git status
@@ -16,26 +13,28 @@ node tests/ordering-contract.test.cjs
 node tests/cms-contract.test.cjs
 ```
 
-If local files are modified or fast-forward fails, resolve them rather than force-resetting. Preserve DNS, HTTPS, assets, hosting config and the friend's unpublished work. No pull request is pending: commits already went to `main`.
+Resolve local changes carefully; DO NOT force-reset unpublished work or delete DNS, SSL or host settings. Redeploy the entire project to the same existing host. No PR approval is required for these already committed changes.
 
-Redeploy the **entire project** on the SAME host connected to the paid domain. Check `index.html` public site, `admin.html` kitchen, `manage.html` manager content editor and `table-qr.html` QR print page. Confirm CSS and images load on phone widths. Do not advertise live ordering until the service setup and end-to-end tests pass.
+## New page structure
 
-## What the website now includes
+- `/index.html` — public café site; table QR guest flow uses `/?table=01` etc.
+- `/admin.html` — SINGLE password-only Admin HQ entrance, linking to ALL operational pages.
+- `/kitchen.html` — live authorised kitchen tickets (previously admin.html).
+- `/manage.html` — manager-only menu, prices, offers and publishing.
+- `/staff.html` — manager-only roster (name, role, shift, active), NOT account creation/revocation.
+- `/table-qr.html` — QR generator. QR prints point to the real paid domain; do not print live signs until deployed and verified.
+- `/demo-kitchen.html`, `/manage.html?demo=1`, `/staff.html?demo=1` — public sample-only demos, no production writes.
 
-- Each physical table gets a unique printed QR URL, e.g. `https://www.hangovershakes.cafe/?table=01`. The guest orders using the full menu and cart. There is no WhatsApp food order, takeaway checkout, delivery or payment gateway.
-- Kitchen uses `admin.html` to view the table, verify the diner is actually seated, accept, prepare, mark ready, then mark served. A shared QR does not prove physical presence.
-- Manager uses `manage.html` to add/remove dishes, change category, prices or sold-out state, manage offers, review, then publish. **Only a granted manager UUID can save changes**, enforced by database row-level policies, not a hidden URL.
-- `manage.html?demo=1` gives a no-login interactive preview, with publishing disabled and no real database writes.
-- After publication, the customer website loads menu and offers from the café database at page load and checks for changes about every minute. Changed menu revision invalidates old guest carts. Kitchen must also reload to use matching product IDs and prices.
+**For a mobile design preview:** `/admin.html` currently accepts temporary PIN **8585** in DEMO mode while backend fields are empty. It does not grant any real privilege. Anyone can inspect public demo code and discover the demo PIN. Even after live setup `/admin.html?demo=1` remains an isolated sample. Do not use 8585 as the real password.
 
-## Important: one-time secure setup remains
+## Mandatory café-owned backend setup
 
-`ordering-config.js` intentionally has empty `supabaseUrl` and `publishableKey`; checkout and real editing are not enabled just by deploying. The available linked Supabase projects appear to belong to other work. Do NOT configure the café against an unrelated project. Obtain a dedicated café-owned project and explicit owner approval first.
+Read `ADMIN_HQ_SETUP.md` first. A real Supabase Auth email/password account (email hidden from the UI), plus real URL/publishable key and `adminLoginEmail` in `ordering-config.js`, enables PASSWORD login verified by Supabase. Use a long unique secret that is NEVER committed or emailed to developer. Apply `cms-schema.sql`, grant manager membership for the authorised account, and optionally apply `staff-schema.sql` for persistent roster data. Roster edits do not create or revoke account privileges.
 
-Follow **`CMS_SETUP.md`**: run `cms-schema.sql`, enable email-link Auth redirect for `https://www.hangovershakes.cafe/manage.html`, grant genuine manager UUID through the SQL editor, set ONLY public URL/publishable key, review actual café prices/promotions and publish the initial catalogue. The content table stores menu and offers, not customer order history. No staff password, OTP, JWT, signing key, secret key or service-role key belongs in browser JS or GitHub.
+Then read `ORDERING_SETUP.md` and apply the private Realtime policies, replacing ALL `kitchen@example.com` placeholders with the approved café account email. The kitchen now lives at `/kitchen.html`. Live QR checkout remains DISABLED while the config is blank; do not bypass this or remove RLS. Never reuse another project belonging to a different business.
 
-Follow **`ORDERING_SETUP.md`** separately for kitchen authentication and private Realtime policies, replacing email placeholders only with the café's verified kitchen/owner email. Set Auth redirect to `https://www.hangovershakes.cafe/admin.html`. No unauthorised staff may read tickets or edit prices.
+## Required live acceptance checks
 
-**MANDATORY REAL-DEVICE TEST:** Kitchen tablet signs in and shows LIVE; another device scans Table 01 QR, sees the published catalogue and offers, adds a single-price and two-price item, places a dine-in request, and kitchen receives table/name/quantities with matching prices and sends acknowledgement → accepted → preparing → ready → served. Repeat for Table 02, unavailable/deleted items, expired offers, staff lacking manager membership, offline kitchen, page reload, faulty connection and mobile widths. Physical QR scan quality and actual SSL/domain routing must be verified. CI checks alone do not test a real Supabase service.
+Test genuine password login and incorrect password rejection on Admin HQ, separately check manager and kitchen permissions, then scan the printed table 01 and table 02 QR on another device. Submit test orders and verify actual kitchen receipt, trusted prices and statuses from received through served. Test sold-out items, declines, offline kitchen, refresh and responsive pages. A shared QR is not proof of physical presence; staff MUST verify the diner is seated.
 
-**Operational stop sign:** Current kitchen tickets are ephemeral and can disappear if its tab sleeps, disconnects or refreshes. Menu publishing causes existing screens to refresh, so do it only after the kitchen clears outstanding tickets and pauses table ordering. Do not promise reliable production orders before a persistent, securely validated order backend replaces this temporary mechanism. Staff should have an offline/manual contingency.
+**Important:** Kitchen orders are ephemeral and can disappear during refresh, screen sleep and disconnect. Menu publishing can refresh kitchen/customer screens; clear all tickets before publishing. Do not take real customer orders until a secure durable backend and end-to-end test are in place, with a manual staff fallback during outages.
