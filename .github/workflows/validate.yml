@@ -18,7 +18,7 @@ jobs:
 
       - name: Check all JavaScript syntax
         run: |
-          for file in app.js menu-data.js ordering-config.js ordering.js admin.js table-qr.js cms-public.js cms-admin.js cms-kitchen.js tests/ordering-contract.test.cjs tests/cms-contract.test.cjs; do
+          for file in app.js menu-data.js ordering-config.js ordering.js admin.js admin-hub.js staff.js table-qr.js cms-public.js cms-admin.js cms-kitchen.js tests/ordering-contract.test.cjs tests/cms-contract.test.cjs; do
             node --check "$file"
           done
 
@@ -29,7 +29,7 @@ jobs:
 
       - name: Check required website files
         run: |
-          for file in index.html admin.html table-qr.html manage.html style.css updates.css app.js menu-data.js ordering.js ordering.css dinein.css admin.js table-qr.js ordering-config.js supabase-realtime-policies.sql ORDERING_SETUP.md FRIEND_DEPLOY_HANDOFF.md tests/ordering-contract.test.cjs tests/cms-contract.test.cjs cms-schema.sql cms-public.js cms-admin.js cms-kitchen.js cms.css assets/logo.png assets/crew.png; do
+          for file in index.html admin.html kitchen.html staff.html table-qr.html manage.html style.css updates.css app.js menu-data.js ordering.js ordering.css dinein.css admin.js admin-hub.js staff.js table-qr.js ordering-config.js supabase-realtime-policies.sql ORDERING_SETUP.md FRIEND_DEPLOY_HANDOFF.md tests/ordering-contract.test.cjs tests/cms-contract.test.cjs cms-schema.sql staff-schema.sql cms-public.js cms-admin.js cms-kitchen.js cms.css assets/logo.png assets/crew.png; do
             test -s "$file"
           done
 
@@ -38,7 +38,6 @@ jobs:
           python - <<'PY'
           from html.parser import HTMLParser
           from pathlib import Path
-
           root = Path('.')
           class Parser(HTMLParser):
               def __init__(self):
@@ -50,8 +49,7 @@ jobs:
                       self.refs.append(data['src'])
                   if tag == 'link' and data.get('href'):
                       self.refs.append(data['href'])
-
-          for html_file in ('index.html', 'admin.html', 'table-qr.html', 'manage.html'):
+          for html_file in ('index.html', 'admin.html', 'kitchen.html', 'staff.html', 'table-qr.html', 'manage.html', 'demo-kitchen.html'):
               html = (root / html_file).read_text(encoding='utf-8')
               parser = Parser()
               parser.feed(html)
