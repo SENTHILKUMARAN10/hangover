@@ -1,42 +1,8 @@
 <!doctype html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="robots" content="noindex,nofollow,noarchive">
-<meta name="theme-color" content="#fcc724">
-<title>Kitchen orders · Hangover Shakes</title>
-<link rel="stylesheet" href="style.css">
-<link rel="stylesheet" href="updates.css">
-<link rel="stylesheet" href="ordering.css">
-<link rel="stylesheet" href="dinein.css">
-</head>
-<body class="hs-admin-body">
-<a class="skip" href="#admin-main">Skip to kitchen orders</a>
-<header class="hs-admin-head wrap">
-  <a href="index.html" aria-label="Hangover Shakes home"><img src="assets/logo.png" alt="Hangover Shakes" width="158" height="63"></a>
-  <nav aria-label="Kitchen controls"><span id="hs-owner-email" style="font-size:12px;font-weight:700"></span><a class="button" href="manage.html">Manage menu & offers ↗</a><a class="button" href="table-qr.html">Print table QRs ↗</a><a class="button" href="index.html">← View café</a><button type="button" class="button" id="hs-sign-out" hidden>Sign out</button></nav>
-</header>
-<main class="hs-admin-main wrap" id="admin-main">
-  <section class="hs-admin-hero"><div><p class="eyebrow">HANGOVER SHAKES / STAFF ONLY</p><h1>KITCHEN <em>CONTROL.</em></h1><p>Guests scan their table QR and send food requests here. Verify the table before accepting. Prepare the food, mark it ready, then mark it served.</p></div><span class="hs-admin-pill" id="hs-live-indicator">● Not connected</span></section>
-  <section class="hs-admin-login" id="hs-login-panel">
-    <p class="eyebrow">KITCHEN ACCESS</p><h2>ONLY THE <em>CREW.</em></h2>
-    <p>Sign in using the café's authorised kitchen email. Access requires a verified email sign-in link. Knowing this URL does not grant access to orders.</p>
-    <form id="hs-login-form"><label>Authorised staff email<input type="email" id="hs-login-email" name="email" required autocomplete="email" maxlength="180" placeholder="kitchen@example.com"></label><button type="submit" class="button" id="hs-login-submit">Email me a sign-in link ↗</button></form>
-    <p role="status" aria-live="polite" id="hs-login-message"></p>
-  </section>
-  <section id="hs-admin-workspace" hidden>
-    <div class="hs-admin-alert" id="hs-admin-notice" role="status" aria-live="polite">Keep the kitchen display open and awake to receive food requests. No order history is stored.</div>
-    <div class="hs-admin-metrics" aria-label="Kitchen order counts"><div class="hs-admin-metric"><strong id="hs-metric-new">0</strong><span>New tickets</span></div><div class="hs-admin-metric"><strong id="hs-metric-active">0</strong><span>Cooking</span></div><div class="hs-admin-metric"><strong id="hs-metric-ready">0</strong><span>Ready</span></div><div class="hs-admin-metric"><strong id="hs-metric-done">0</strong><span>Finished</span></div></div>
-    <div class="hs-admin-tabs" role="group" aria-label="Filter kitchen tickets"><button type="button" data-filter="all" class="active">All tickets</button><button type="button" data-filter="received">New</button><button type="button" data-filter="confirmed">Accepted</button><button type="button" data-filter="preparing">Preparing</button><button type="button" data-filter="ready">Ready</button><button type="button" data-filter="served">Served</button><button type="button" data-filter="rejected">Declined</button></div>
-    <div class="hs-order-grid" id="hs-admin-orders" aria-live="polite"></div>
-    <p class="hs-admin-alert">Temporary live queue: keep the kitchen tablet awake. Refreshing, closing, disconnecting or restarting the realtime service can lose food requests. Staff must confirm tables and keep a manual fallback.</p>
-  </section>
-</main>
-<script src="menu-data.js" defer></script>
-<script src="ordering-config.js" defer></script>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.91.0" defer></script>
-<script src="cms-public.js" defer></script>
-<script src="cms-kitchen.js" defer></script>
-</body>
-</html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow,noarchive"><meta name="theme-color" content="#fcc724"><title>Admin HQ · Hangover Shakes</title><link rel="stylesheet" href="style.css"><link rel="stylesheet" href="updates.css"><link rel="stylesheet" href="ordering.css"><link rel="stylesheet" href="dinein.css"><style>
+.hs-hub{min-height:calc(100dvh - 90px);padding:clamp(22px,5vw,70px) 0 90px}.hs-hub-hero{padding:clamp(24px,5vw,48px);border:2px solid var(--ink);background:var(--yellow);border-radius:22px;box-shadow:8px 9px 0 var(--ink);margin-bottom:30px}.hs-hub-hero h1{font:900 clamp(44px,8vw,94px)/.94 'Barlow Condensed',Impact,sans-serif;margin:10px 0}.hs-hub-hero p{max-width:620px;line-height:1.6}.hs-hub-panel{max-width:540px;margin:40px auto;border:2px solid var(--ink);border-radius:20px;padding:clamp(23px,5vw,40px);background:var(--cream);box-shadow:6px 7px 0 var(--ink)}.hs-hub-panel h2{font:900 clamp(34px,6vw,52px)/1 'Barlow Condensed',Impact,sans-serif;margin:8px 0 20px}.hs-hub-panel label{display:grid;gap:10px;font-weight:900}.hs-hub-panel input{width:100%;font:inherit;padding:16px;border:2px solid var(--ink);border-radius:10px;background:white;min-height:54px}.hs-hub-panel button{width:100%;margin-top:18px;min-height:50px;cursor:pointer}.hs-hub-status{font-size:13px;line-height:1.6;margin:14px 0 0}.hs-hub-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,250px),1fr));gap:18px;margin:28px 0}.hs-hub-card{display:flex;min-height:196px;flex-direction:column;gap:8px;padding:24px;border:2px solid var(--ink);border-radius:18px;background:var(--cream);box-shadow:4px 5px 0 var(--ink);color:var(--ink);text-decoration:none;transition:transform .2s}.hs-hub-card:hover,.hs-hub-card:focus-visible{transform:translateY(-4px)}.hs-hub-card span{font-size:35px}.hs-hub-card strong{font:900 30px/1 'Barlow Condensed',Impact,sans-serif}.hs-hub-card small{font-size:13px;line-height:1.5}.hs-hub-card b{margin-top:auto;font-size:13px}.hs-hub-meta{display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap;margin-top:24px}.hs-hub-meta button{cursor:pointer}.hs-hub-warning{background:#fff2bb;border:1px solid #8f702d;border-radius:12px;padding:14px 18px;font-size:13px;line-height:1.5}.hs-hub-live{font-weight:900;font-size:12px;letter-spacing:.09em}#hs-hub-login[hidden],#hs-hub-workspace[hidden]{display:none!important}@media(max-width:580px){.hs-hub-hero{box-shadow:4px 5px 0 var(--ink)}.hs-hub-grid{gap:15px}.hs-hub-card{min-height:165px}}
+</style></head><body class="hs-admin-body"><a class="skip" href="#admin-main">Skip to Admin</a><header class="hs-admin-head wrap"><a href="index.html" aria-label="Café home"><img src="assets/logo.png" width="158" height="63" alt="Hangover Shakes"></a><nav><a class="button" href="index.html">← Café website</a></nav></header>
+<main id="admin-main" class="hs-hub wrap"><section class="hs-hub-hero"><p class="eyebrow">HANGOVER SHAKES / CREW ONLY</p><h1>THE ADMIN <em>HQ.</em></h1><p>One entrance for everything behind the counter. Kitchen tickets, menu and offers, staff roster, and printable table QR codes.</p></section>
+<section id="hs-hub-login" class="hs-hub-panel"><p class="eyebrow">ONE SIMPLE ENTRANCE</p><h2>WHAT'S THE <em>PASSWORD?</em></h2><form id="hs-hub-form"><label for="hs-hub-password">Admin password<input id="hs-hub-password" type="password" autocomplete="current-password" required minlength="4" maxlength="128" placeholder="Enter admin password"></label><button id="hs-hub-enter" class="button" type="submit">Enter Admin HQ ↗</button></form><p class="hs-hub-status" id="hs-hub-status" role="status" aria-live="polite">Checking admin configuration…</p></section>
+<section id="hs-hub-workspace" hidden><div class="hs-hub-meta"><div><p class="eyebrow">YOU'RE IN THE CREW</p><h2 style="margin:3px 0">Admin workspace <span id="hs-hub-mode" class="hs-hub-live"></span></h2></div><button id="hs-hub-logout" type="button" class="button">Lock admin ↗</button></div><p id="hs-hub-warning" class="hs-hub-warning" role="status"></p><div class="hs-hub-grid" aria-label="Admin pages"><a id="hs-hub-kitchen" class="hs-hub-card" href="demo-kitchen.html"><span>🍳</span><strong>Kitchen orders</strong><small>Incoming table orders, cooking and serving statuses.</small><b>Open kitchen ↗</b></a><a id="hs-hub-menu" class="hs-hub-card" href="manage.html?demo=1"><span>🍔</span><strong>Menu & offers</strong><small>Add dishes, change prices, mark sold out, edit offers.</small><b>Open content studio ↗</b></a><a id="hs-hub-staff" class="hs-hub-card" href="staff.html?demo=1"><span>👥</span><strong>Staff management</strong><small>View team roster and manage shift details in demo.</small><b>Open staff ↗</b></a><a id="hs-hub-qr" class="hs-hub-card" href="table-qr.html"><span>▦</span><strong>Table QR codes</strong><small>Generate, inspect and print table-specific QR signs.</small><b>Open QR generator ↗</b></a><a id="hs-hub-site" class="hs-hub-card" href="index.html"><span>🌐</span><strong>Customer website</strong><small>Preview the menu and the guest experience.</small><b>View café ↗</b></a></div></section></main>
+<script src="ordering-config.js" defer></script><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.91.0" defer></script><script src="admin-hub.js" defer></script></body></html>
