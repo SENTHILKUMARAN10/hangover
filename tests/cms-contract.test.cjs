@@ -7,7 +7,7 @@ const root=path.resolve(__dirname,'..');
 const read=file=>fs.readFileSync(path.join(root,file),'utf8');
 const boot=(config,snapshot)=>{
   const store=new Map([['hangover-dinein-cart-v1-table-1','{"s0i0v0":2}'],['hs-published-menu-revision','0']]);
-  const storage={getItem:key=>store.has(key)?store.get(key):null,setItem:(key,value)=>store.set(key,value),removeItem:key=>store.delete(key),keys:()=>[...store.keys()]};
+  const storage={getItem:key=>store.has(key)?store.get(key):null,setItem:(key,value)=>store.set(key,value),removeItem:key=>store.delete(key),key:index=>[...store.keys()][index]||null,get length(){return store.size;}};
   const client={from:table=>{assert.equal(table,'hs_content');return {select:()=>({eq:()=>({maybeSingle:async()=>({data:snapshot,error:null})})})};}};
   const window={HS_ORDER_CONFIG:config,HANGOVER_MENU:[{category:'Old',group:'meals',items:[['Old item','₹100']]}],supabase:{createClient:()=>client}};
   const sandbox={window,localStorage:storage,console:{warn:()=>{}},setInterval:()=>{},location:{reload:()=>{}}};
